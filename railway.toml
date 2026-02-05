@@ -1,9 +1,7 @@
 [build]
 builder = "DOCKERFILE"
 dockerfilePath = "Dockerfile.railway"
-
-[build.watchPatterns]
-patterns = ["backend/**"]
+watchPatterns = ["backend/**"]
 
 [deploy]
 restartPolicyType = "ON_FAILURE"
