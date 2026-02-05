@@ -24,5 +24,8 @@ COPY ./scripts ./scripts
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONPATH=/app
 
-# Запуск приложения
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Expose port (Railway будет использовать переменную $PORT)
+EXPOSE 8000
+
+# Запуск приложения с миграциями
+CMD sh -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"
