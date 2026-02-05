@@ -59,14 +59,14 @@ const HomePage: React.FC = () => {
 
         if (page === 1) {
           setAttractions(response.data.items);
+          setHasMore(response.data.items.length === 10 && response.data.items.length < response.data.total);
         } else {
-          setAttractions((prev) => [...prev, ...response.data.items]);
+          setAttractions((prev) => {
+            const newAttractions = [...prev, ...response.data.items];
+            setHasMore(response.data.items.length === 10 && newAttractions.length < response.data.total);
+            return newAttractions;
+          });
         }
-
-        setHasMore(
-          response.data.items.length === 10 &&
-            attractions.length + response.data.items.length < response.data.total
-        );
       } catch (error: any) {
         console.error('Error loading attractions:', error);
         setError(`Ошибка загрузки достопримечательностей: ${error.message}`);
